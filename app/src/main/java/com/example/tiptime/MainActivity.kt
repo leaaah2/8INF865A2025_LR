@@ -110,6 +110,7 @@ fun TipTimeLayout() {
                 .padding(bottom = 32.dp)
                 .fillMaxWidth()
         )
+
         EditNumberField(
             label = R.string.how_was_the_service,
             leadingIcon = R.drawable.percent,
