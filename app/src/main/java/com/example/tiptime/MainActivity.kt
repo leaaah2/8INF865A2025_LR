@@ -49,6 +49,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 
 class MainActivity : ComponentActivity() {
@@ -88,6 +89,10 @@ fun TipTimeLayout() {
         )
         EditNumberField(
             label = R.string.bill_amount,
+            keyboardOptions = KeyboardOptions.Default.copy(
+                keyboardType = KeyboardType.Number,
+                imeAction = ImeAction.Next
+            ),
             value = amountInput,
             onValueChanged = { amountInput = it },
             modifier = Modifier
@@ -96,6 +101,10 @@ fun TipTimeLayout() {
         )
         EditNumberField(
             label = R.string.how_was_the_service,
+            keyboardOptions = KeyboardOptions.Default.copy(
+                keyboardType = KeyboardType.Number,
+                imeAction = ImeAction.Done
+            ),
             value = tipInput,
             onValueChanged = { tipInput = it },
             modifier = Modifier
@@ -108,6 +117,24 @@ fun TipTimeLayout() {
         )
         Spacer(modifier = Modifier.height(150.dp))
     }
+}
+
+@Composable
+fun EditNumberField(
+    @StringRes label: Int,
+    keyboardOptions: KeyboardOptions,
+    value: String,
+    onValueChanged: (String) -> Unit,
+    modifier: Modifier = Modifier
+)  {
+    TextField(
+        value = value,
+        onValueChange = onValueChanged,
+        singleLine = true,
+        label = { Text(stringResource(label)) },
+        modifier = modifier,
+        keyboardOptions = keyboardOptions
+    )
 }
 
 /**
@@ -126,21 +153,4 @@ fun TipTimeLayoutPreview() {
     TipTimeTheme {
         TipTimeLayout()
     }
-}
-
-@Composable
-fun EditNumberField(
-    @StringRes label: Int,
-    value: String,
-    onValueChanged: (String) -> Unit,
-    modifier: Modifier = Modifier
-)  {
-    TextField(
-        value = value,
-        onValueChange = onValueChanged,
-        singleLine = true,
-        label = { Text(stringResource(label)) },
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-        modifier = modifier
-    )
 }
